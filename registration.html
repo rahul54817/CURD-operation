@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- bootstrap css Link  -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+    <!-- bootstrap javascript Link  -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" href="style.css">
+
+
+    <title>Registeration</title>
+
+</head>
+
+<body>
+
+    <section class="vh-100" style="background-color: #2779e2;">
+        <div class="container h-100">
+          <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="col-xl-6">
+      
+              
+      
+              <div class="card" style="border-radius: 15px;">
+                <div class="card-body">
+                   
+
+                <form  >
+                  <h1 class=" mb-2">Registration Form</h1>
+      
+                  <div class="row align-items-center pt-1 pb-1">
+                    <div class="col-md-3 ps-4">
+                      <h6 class="mb-0">First Name</h6>
+                    </div>
+                    <div class="col-md-9 pe-1  has-validation">
+                      <input id="fname" type="text" class="form-control form-control-lg" required/>
+                     
+                    </div>
+                  </div>
+                  <!-- <hr class="mx-n3"> -->
+
+                  <div class="row align-items-center pt-1 pb-1">
+                    <div class="col-md-3 ps-4">
+                      <h6 class="mb-0">Last Name</h6>
+                    </div>
+                    <div class="col-md-9 pe-1">
+                      <input id="lname" type="text" class="form-control form-control-lg" required/>
+                    </div>
+                  </div>
+                  <!-- <hr class="mx-n3"> -->
+      
+                  <div class="row align-items-center pt-1 pb-1">
+                    <div class="col-md-3 ps-4">
+                      <h6 class="mb-0">Email</h6>
+                    </div>
+                    <div class="col-md-9 pe-1">
+                      <input id="email" type="email" class="form-control form-control-lg" required/>
+                    </div>
+                  </div>
+
+                  <!-- <hr class="mx-n3"> -->
+
+                  <div class="row align-items-center pt-1 pb-1">
+                    <div class="col-md-3 ps-4">
+                      <h6 class="mb-0">Password</h6>
+                    </div>
+                    <div class="col-md-9 pe-1">
+                      <input id="password" type="password" class="form-control form-control-lg" required/>
+                    </div>
+                  </div>
+                  <!-- <hr class="mx-n3"> -->
+
+                  <div class="row align-items-center pt-1 pb-1">
+                    <div class="col-md-3 ps-4">
+                      <h6 class="mb-0">Contact Number</h6>
+                    </div>
+                    <div class="col-md-9 pe-1">
+                      <input id="contact" type="number" class="form-control form-control-lg" required/>
+                    </div>
+                  </div>
+                  <!-- <hr class="mx-n3"> -->
+
+                  <div class="row align-items-center pt-1 pb-1">
+                    <div class="col-md-3 ps-4">
+                      <h6 class="mb-0">Date of Birth</h6>
+                    </div>
+                    <div class="col-md-9 pe-1">
+                      <input id="dob" type="date" class="form-control form-control-lg" required/>
+                    </div>
+                  </div>
+
+                  <hr class="mx-n3">
+                  <div class="px-5 py-4">
+                    <button type="submit" class="btn btn-primary btn-lg" onclick="onSubmit()">Register</button>
+                    <button type="submit" class="btn btn-primary btn-lg" onclick="dasbordHandle()">Dashbord</button>
+
+                  </div>
+
+                  
+
+                </form>
+                </div>
+              </div>
+      
+            </div>
+          </div>
+        </div>
+      </section>
+    
+
+
+    <script>
+
+        class user {
+            constructor(fname, lname, email, contact, dob, password) {
+                this.fname = fname;
+                this.lname = lname;
+                this.email = email;
+                this.contact = contact;
+                this.dob = dob;
+                this.password = password;
+            }
+        }
+
+        function onSubmit() {
+            
+
+            let users = new Array();
+
+
+            users = JSON.parse(localStorage.getItem('Users')) ? JSON.parse(localStorage.getItem('Users')) : [];
+
+
+
+            let firstName = document.getElementById("fname").value;
+            let lastName = document.getElementById("lname").value;
+            let email = document.getElementById('email').value;
+            let contact = document.getElementById('contact').value;
+            let dob = document.getElementById('dob').value;
+            let pass = document.getElementById('password').value;
+
+            if (fname === '' || lname === '' || email === '' || password === '' || contact === '' || dob === '') {
+               alert('Please fill all the details');
+                // Prevent form submission
+             }
+             else{
+              let newUser = new user(firstName, lastName, email, contact, dob, pass);
+
+              if (users.some(user => {
+                  return user.email == email;
+              })) {
+                  alert("user already registered");
+              }
+              else {
+                  alert("registration complete ");
+                  
+                  users.push(newUser);              
+
+                  localStorage.setItem('Users', JSON.stringify(users));
+                  window.location.href = "index.html";              
+
+                  
+              }
+
+
+             }
+
+
+           
+        }
+        function dasbordHandle(){
+          window.location.href = "index.html";
+        }
+
+    </script>
+
+</body>
+
+</html>
